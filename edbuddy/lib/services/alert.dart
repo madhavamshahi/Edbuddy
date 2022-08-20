@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-
+import 'package:image_picker/image_picker.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
-
+import 'package:edbuddy/services/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import 'dart:io';
 
 showDetails({required BuildContext context}) {
   return Alert(
@@ -39,6 +41,7 @@ showDetails({required BuildContext context}) {
 }
 
 inputListing({required BuildContext context}) {
+  XFile? img;
   return Alert(
       context: context,
       title: "List your supplies",
@@ -48,9 +51,21 @@ inputListing({required BuildContext context}) {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text("Add an image"),
-              Icon(FontAwesomeIcons.plus),
+              GestureDetector(
+                  onTap: () async {
+                    img = await getImage();
+                  },
+                  child: Icon(FontAwesomeIcons.plus)),
             ],
           ),
+          img != null
+              ? Image(
+                  image: FileImage(
+                  File(
+                    img!.path,
+                  ),
+                ))
+              : Container(),
           TextField(
             obscureText: true,
             decoration: InputDecoration(
@@ -71,7 +86,7 @@ inputListing({required BuildContext context}) {
         DialogButton(
           onPressed: () => Navigator.pop(context),
           child: Text(
-            "LOGIN",
+            "Done",
             style: TextStyle(color: Colors.white, fontSize: 20),
           ),
         )
