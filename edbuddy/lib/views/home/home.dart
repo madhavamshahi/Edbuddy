@@ -90,7 +90,7 @@ class _HomeState extends State<Home> {
     ),
     Center(
       child: Text(
-        'Nearby Learners',
+        'hhh',
         style: optionStyle,
       ),
     ),
@@ -191,11 +191,55 @@ class _HomeState extends State<Home> {
         ],
       ),
       Center(
-        child: Text(
-          'Nearby Learners',
-          style: optionStyle,
+          child: Padding(
+        padding: const EdgeInsets.fromLTRB(0, 80, 0, 0),
+        child: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            Container(
+              height: 200,
+              width: 200,
+              decoration: BoxDecoration(
+                color: Colors.amber,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15),
+                ),
+              ),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 35,
+                  ),
+                  Container(
+                    margin: EdgeInsets.all(15),
+                    child: Text(
+                      "Madhavam Pratap Shahi",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+            Positioned(
+              top: -40,
+              right: 16,
+              left: 16,
+              child: Container(
+                width: 80,
+                height: 80,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage("assets/images/illus6.png")),
+                  shape: BoxShape.circle,
+                ),
+              ),
+            )
+          ],
         ),
-      ),
+      )),
       Center(
         child: Text(
           'Profile',
