@@ -125,12 +125,61 @@ class _HomeState extends State<Home> {
           ),
         ],
       ),
-      Center(
-        child: Column(
-          children: [
-            Filter(),
-          ],
-        ),
+      Column(
+        children: [
+          Filter(),
+          Material(
+            elevation: 2,
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15),
+                ),
+              ),
+              margin: EdgeInsets.all(25),
+              child: Row(
+                children: [
+                  CircleAvatar(
+                    backgroundImage: AssetImage("assets/images/illus6.png"),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("Madhavam Shahi"),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(4)),
+                          color: Colors.blue,
+                        ),
+                        child: Text(
+                          "Maths",
+                          style: TextStyle(fontSize: 12, color: Colors.white),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: Icon(
+                        FontAwesomeIcons.message,
+                        color: Colors.blue,
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
       Center(
         child: Text(

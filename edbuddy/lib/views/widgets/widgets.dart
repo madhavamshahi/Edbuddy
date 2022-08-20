@@ -8,3 +8,4 @@ export 'noRequests.dart';
 export 'loadingBar.dart';
 export 'alert.dart';
 export 'toast.dart';
+export 'filter.dart';
