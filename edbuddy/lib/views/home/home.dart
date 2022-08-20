@@ -2,6 +2,7 @@ import 'package:edbuddy/views/widgets/buddyBox.dart';
 import 'package:edbuddy/views/widgets/filter.dart';
 import 'package:edbuddy/views/widgets/listBox.dart';
 import 'package:edbuddy/views/widgets/majorBox.dart';
+import 'package:edbuddy/views/widgets/userprofile.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
@@ -208,12 +209,7 @@ class _HomeState extends State<Home> {
           ),
         ],
       ),
-      Center(
-        child: Text(
-          'Profile',
-          style: optionStyle,
-        ),
-      ),
+      UserProfileView(),
     ];
 
     return SideMenu(

@@ -24,7 +24,7 @@ class _UserProfileViewState extends State<UserProfileView> {
     return SingleChildScrollView(
       child: SafeArea(
         child: Container(
-          margin: EdgeInsets.all(25),
+          margin: EdgeInsets.all(15),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -46,7 +46,7 @@ class _UserProfileViewState extends State<UserProfileView> {
                         shape: BoxShape.circle,
                         color: Colors.white,
                         image: DecorationImage(
-                          image: AssetImage("assets/second.png"),
+                          image: AssetImage("assets/images/illus6.png"),
                           fit: BoxFit.contain,
                         ),
                         boxShadow: [
@@ -55,37 +55,6 @@ class _UserProfileViewState extends State<UserProfileView> {
                             offset: Offset(5, 5),
                             blurRadius: 10,
                           )
-                        ],
-                      ),
-                    ),
-
-                    Flexible(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Class of",
-                            maxLines: 5,
-                            style: TextStyle(
-                              letterSpacing: 1.5,
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: "QuickSand",
-                              fontSize: 25.0,
-                            ),
-                          ),
-                          Text(
-                            "2026",
-                            maxLines: 5,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              letterSpacing: 1.5,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: "QuickSand",
-                              fontSize: 18.0,
-                            ),
-                          ),
                         ],
                       ),
                     ),
@@ -107,7 +76,7 @@ class _UserProfileViewState extends State<UserProfileView> {
               ),
               SizedBox(height: 10),
               Text(
-                "Incoming freshman, Computer Science",
+                "Computer Science",
                 maxLines: 5,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
@@ -122,30 +91,30 @@ class _UserProfileViewState extends State<UserProfileView> {
               OptionRow(
                 onTap: () {},
                 iconColor2: Color(0xFFFEF0E4),
-                text: "Edit Profile",
-                iconData: FontAwesomeIcons.edit,
+                text: "Credits",
+                iconData: FontAwesomeIcons.handshake,
                 iconColor: Color(0xFFFE6D1E),
               ),
               OptionRow(
                 // TODO for profile edit https://dribbble.com/shots/15054650-BoltCard-Settings-Profile
                 onTap: () {},
                 iconColor2: Color(0xFFECEAFE),
-                text: "Frog Bucks",
-                iconData: FontAwesomeIcons.dollarSign,
+                text: "Study buddies",
+                iconData: FontAwesomeIcons.peopleGroup,
                 iconColor: Color(0xFF5722FB),
               ),
               OptionRow(
                 onTap: () {},
                 iconColor2: Color(0xFFE4F7FF),
-                text: "Pay Tuition",
-                iconData: FontAwesomeIcons.accessibleIcon,
+                text: "View Listings",
+                iconData: FontAwesomeIcons.book,
                 iconColor: Color(0xFF02A2EE),
               ),
               OptionRow(
                 onTap: () async {},
                 iconColor2: Color(0xFFF989A4),
                 text: "Sign out",
-                iconData: Icons.leaderboard,
+                iconData: FontAwesomeIcons.signOut,
                 iconColor: Colors.white,
               ),
             ],
