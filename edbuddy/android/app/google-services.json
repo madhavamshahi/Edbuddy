@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "459151056132",
+    "project_id": "edbuddy-d08c3",
+    "storage_bucket": "edbuddy-d08c3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:459151056132:android:bb53be8b43297358f70451",
+        "android_client_info": {
+          "package_name": "com.example.edbuddy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "459151056132-sk67jig860tnrom3npqtbp1pi656p7va.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDgnpTQvUtRVaHXkVnvbnKsT4SpPDDrvc4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "459151056132-sk67jig860tnrom3npqtbp1pi656p7va.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
