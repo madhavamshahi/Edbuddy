@@ -1,3 +1,4 @@
+import 'package:edbuddy/views/widgets/filter.dart';
 import 'package:edbuddy/views/widgets/listBox.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -125,9 +126,10 @@ class _HomeState extends State<Home> {
         ],
       ),
       Center(
-        child: Text(
-          'Study Buddy',
-          style: optionStyle,
+        child: Column(
+          children: [
+            Filter(),
+          ],
         ),
       ),
       Center(
