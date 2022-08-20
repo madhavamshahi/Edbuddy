@@ -7,6 +7,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shrink_sidemenu/shrink_sidemenu.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:edbuddy/services/services.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -113,7 +114,11 @@ class _HomeState extends State<Home> {
                 mainAxisExtent: 256,
               ),
               itemBuilder: (BuildContext context, int index) {
-                return ListBox();
+                return GestureDetector(
+                    onTap: () {
+                      showDetails(context: context);
+                    },
+                    child: ListBox());
               },
             ),
           ),
