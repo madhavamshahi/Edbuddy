@@ -65,10 +65,6 @@ inputListing({required BuildContext context}) {
               labelText: 'Phone number',
             ),
           ),
-          TextButton(
-            onPressed: () {},
-            child: Text("Done"),
-          ),
         ],
       ),
       buttons: [
