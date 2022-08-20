@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:edbuddy/services/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'package:dropdown_search/dropdown_search.dart';
 import 'dart:io';
 
 showDetails({required BuildContext context}) {
@@ -126,4 +126,59 @@ class _AddImageState extends State<AddImage> {
       ],
     );
   }
+}
+
+studyBuddyReq({required BuildContext context}) {
+  return Alert(
+      context: context,
+      title: "Find your buddy",
+      content: Column(
+        children: <Widget>[
+          SizedBox(height: 20),
+          DropdownSearch<String>.multiSelection(
+            items: [
+              "Computer Science",
+              "Data Science",
+              "Economics",
+              "Biology",
+              "Maths",
+              "Chemistry",
+              "Pshycology",
+              "Music",
+              "Macroeconomics",
+              "History",
+              "Political Science",
+              "Business",
+              "Geology",
+              "Astronomy",
+              "Finance",
+              "Civics",
+              "Geography",
+              "Physics",
+            ],
+            popupProps: PopupPropsMultiSelection.menu(
+              showSelectedItems: true,
+              disabledItemFn: (String s) => s.startsWith('I'),
+            ),
+            onChanged: print,
+            selectedItems: ["Maths"],
+          ),
+          TextField(
+            obscureText: true,
+            decoration: InputDecoration(
+              icon: Icon(FontAwesomeIcons.phone),
+              labelText: 'Phone number',
+            ),
+          ),
+        ],
+      ),
+      buttons: [
+        DialogButton(
+          onPressed: () => Navigator.pop(context),
+          child: Text(
+            "Done",
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
+        )
+      ]).show();
 }

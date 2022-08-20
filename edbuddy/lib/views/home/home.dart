@@ -136,7 +136,7 @@ class _HomeState extends State<Home> {
     if (n == 1) {
       return FloatingActionButton.extended(
         onPressed: () {
-          inputListing(context: context);
+          studyBuddyReq(context: context);
 
           // Add your onPressed code here!
         },
