@@ -120,6 +120,42 @@ class _HomeState extends State<Home> {
     return "null";
   }
 
+  getFAB(int n) {
+    if (n == 0) {
+      return FloatingActionButton.extended(
+        onPressed: () {
+          inputListing(context: context);
+
+          // Add your onPressed code here!
+        },
+        label: Text('Add Listing'),
+        icon: Icon(FontAwesomeIcons.plus),
+        backgroundColor: Colors.blue,
+      );
+    }
+    if (n == 1) {
+      return FloatingActionButton.extended(
+        onPressed: () {
+          inputListing(context: context);
+
+          // Add your onPressed code here!
+        },
+        label: Text('Find buddy'),
+        icon: Icon(FontAwesomeIcons.search),
+        backgroundColor: Colors.blue,
+      );
+    }
+
+    if (n == 2) {
+      return Container();
+    }
+
+    if (n == 3) {
+      return Container();
+    }
+    return Container();
+  }
+
   @override
   Widget build(BuildContext context) {
     List<Widget> _widgetOptions = <Widget>[
@@ -179,18 +215,7 @@ class _HomeState extends State<Home> {
         setState(() => isOpened = _isOpened);
       },
       child: Scaffold(
-        floatingActionButton: _selectedIndex == 0
-            ? FloatingActionButton.extended(
-                onPressed: () {
-                  inputListing(context: context);
-
-                  // Add your onPressed code here!
-                },
-                label: Text('Add Listing'),
-                icon: Icon(FontAwesomeIcons.plus),
-                backgroundColor: Colors.blue,
-              )
-            : Container(),
+        floatingActionButton: getFAB(_selectedIndex),
         backgroundColor: Colors.white,
         appBar: AppBar(
           centerTitle: true,
