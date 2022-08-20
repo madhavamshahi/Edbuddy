@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
 import 'package:google_fonts/google_fonts.dart';
@@ -31,6 +32,50 @@ showDetails({required BuildContext context}) {
           onPressed: () => Navigator.pop(context),
           child: Text(
             "Send SMS",
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
+        )
+      ]).show();
+}
+
+inputListing({required BuildContext context}) {
+  return Alert(
+      context: context,
+      title: "List your supplies",
+      content: Column(
+        children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text("Add an image"),
+              Icon(FontAwesomeIcons.plus),
+            ],
+          ),
+          TextField(
+            obscureText: true,
+            decoration: InputDecoration(
+              icon: Icon(FontAwesomeIcons.textHeight),
+              labelText: 'Description',
+            ),
+          ),
+          TextField(
+            obscureText: true,
+            decoration: InputDecoration(
+              icon: Icon(FontAwesomeIcons.phone),
+              labelText: 'Phone number',
+            ),
+          ),
+          TextButton(
+            onPressed: () {},
+            child: Text("Done"),
+          ),
+        ],
+      ),
+      buttons: [
+        DialogButton(
+          onPressed: () => Navigator.pop(context),
+          child: Text(
+            "LOGIN",
             style: TextStyle(color: Colors.white, fontSize: 20),
           ),
         )

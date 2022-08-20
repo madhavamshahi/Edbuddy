@@ -158,6 +158,8 @@ class _HomeState extends State<Home> {
         floatingActionButton: _selectedIndex == 0
             ? FloatingActionButton.extended(
                 onPressed: () {
+                  inputListing(context: context);
+
                   // Add your onPressed code here!
                 },
                 label: Text('Add Listing'),
@@ -182,9 +184,7 @@ class _HomeState extends State<Home> {
                 FontAwesomeIcons.userAstronaut,
                 color: Colors.black,
               ),
-              onPressed: () {
-                // do something
-              },
+              onPressed: () {},
             ),
             SizedBox(
               width: 20,
