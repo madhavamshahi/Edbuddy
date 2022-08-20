@@ -1,5 +1,6 @@
 import 'package:filter_list/filter_list.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Filter extends StatefulWidget {
   Filter({Key? key}) : super(key: key);
@@ -36,7 +37,7 @@ class _FilterState extends State<Filter> {
       context,
       hideSelectedTextCount: true,
       themeData: FilterListThemeData(context),
-      headlineText: 'Select Users',
+      headlineText: 'Select Subjects',
       height: 500,
       listData: subjects,
       selectedListData: selectedList,
@@ -65,11 +66,17 @@ class _FilterState extends State<Filter> {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: () {
-        _openFilterDialog(context: context);
-      },
-      child: Text("Filter"),
+    return Align(
+      alignment: Alignment.centerRight,
+      child: Container(
+        margin: EdgeInsets.all(8),
+        child: IconButton(
+          onPressed: () {
+            _openFilterDialog(context: context);
+          },
+          icon: Icon(FontAwesomeIcons.filter, color: Colors.blue),
+        ),
+      ),
     );
   }
 }

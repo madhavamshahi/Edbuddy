@@ -1,3 +1,4 @@
+import 'package:edbuddy/views/widgets/buddyBox.dart';
 import 'package:edbuddy/views/widgets/filter.dart';
 import 'package:edbuddy/views/widgets/listBox.dart';
 import 'package:flutter/material.dart';
@@ -101,6 +102,24 @@ class _HomeState extends State<Home> {
     ),
   ];
 
+  String getTitle(int n) {
+    if (n == 0) {
+      return "All Listings";
+    }
+    if (n == 1) {
+      return "Find a buddy";
+    }
+
+    if (n == 2) {
+      return "Nearby learners";
+    }
+
+    if (n == 3) {
+      return "Profile";
+    }
+    return "null";
+  }
+
   @override
   Widget build(BuildContext context) {
     List<Widget> _widgetOptions = <Widget>[
@@ -128,72 +147,11 @@ class _HomeState extends State<Home> {
       Column(
         children: [
           Filter(),
-          Container(
-            padding: EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(7),
-                  topRight: Radius.circular(7),
-                  bottomLeft: Radius.circular(7),
-                  bottomRight: Radius.circular(7)),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
-                  spreadRadius: 5,
-                  blurRadius: 7,
-                  offset: Offset(0, 3), // changes position of shadow
-                ),
-              ],
-            ),
-            margin: EdgeInsets.all(20),
-            child: Row(
-              children: [
-                Column(
-                  children: [
-                    CircleAvatar(
-                      backgroundImage: AssetImage("assets/images/illus6.png"),
-                    ),
-                    SizedBox(height: 15),
-                    Text(
-                      "August 20",
-                      style: TextStyle(fontSize: 12, color: Colors.black),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text("Madhavam Shahi"),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Container(
-                      padding: EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(4)),
-                        color: Colors.blue,
-                      ),
-                      child: Text(
-                        "Maths",
-                        style: TextStyle(fontSize: 12, color: Colors.white),
-                      ),
-                    ),
-                  ],
-                ),
-                Expanded(
-                  child: Icon(
-                    FontAwesomeIcons.message,
-                    color: Colors.blue,
-                  ),
-                )
-              ],
-            ),
-          ),
+          Expanded(
+            child: ListView.builder(itemBuilder: (context, int n) {
+              return BuddyBox();
+            }),
+          )
         ],
       ),
       Center(
@@ -236,12 +194,10 @@ class _HomeState extends State<Home> {
         backgroundColor: Colors.white,
         appBar: AppBar(
           centerTitle: true,
-          title: _selectedIndex == 0
-              ? Text(
-                  "All Listings",
-                  style: TextStyle(color: Colors.black),
-                )
-              : Container(),
+          title: Text(
+            "${getTitle(_selectedIndex)}",
+            style: TextStyle(color: Colors.black),
+          ),
           backgroundColor: Colors.white,
           elevation: 0,
           actions: <Widget>[
