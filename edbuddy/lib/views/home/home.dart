@@ -1,6 +1,7 @@
 import 'package:edbuddy/views/widgets/buddyBox.dart';
 import 'package:edbuddy/views/widgets/filter.dart';
 import 'package:edbuddy/views/widgets/listBox.dart';
+import 'package:edbuddy/views/widgets/majorBox.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
@@ -111,7 +112,7 @@ class _HomeState extends State<Home> {
     }
 
     if (n == 2) {
-      return "Nearby learners";
+      return "Same Majors";
     }
 
     if (n == 3) {
@@ -190,56 +191,23 @@ class _HomeState extends State<Home> {
           )
         ],
       ),
-      Center(
-          child: Padding(
-        padding: const EdgeInsets.fromLTRB(0, 80, 0, 0),
-        child: Stack(
-          clipBehavior: Clip.none,
-          children: [
-            Container(
-              height: 200,
-              width: 200,
-              decoration: BoxDecoration(
-                color: Colors.amber,
-                borderRadius: BorderRadius.all(
-                  Radius.circular(15),
-                ),
+      Column(
+        children: [
+          SizedBox(height: 20),
+          Expanded(
+            child: GridView.builder(
+              itemCount: 20,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisExtent: 256,
               ),
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 35,
-                  ),
-                  Container(
-                    margin: EdgeInsets.all(15),
-                    child: Text(
-                      "Madhavam Pratap Shahi",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                      ),
-                    ),
-                  )
-                ],
-              ),
+              itemBuilder: (BuildContext context, int index) {
+                return MajorBox();
+              },
             ),
-            Positioned(
-              top: -40,
-              right: 16,
-              left: 16,
-              child: Container(
-                width: 80,
-                height: 80,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage("assets/images/illus6.png")),
-                  shape: BoxShape.circle,
-                ),
-              ),
-            )
-          ],
-        ),
-      )),
+          ),
+        ],
+      ),
       Center(
         child: Text(
           'Profile',
