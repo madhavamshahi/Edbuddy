@@ -14,10 +14,10 @@ class ListBox extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(10),
-            topRight: Radius.circular(10),
-            bottomLeft: Radius.circular(10),
-            bottomRight: Radius.circular(10)),
+            topLeft: Radius.circular(7),
+            topRight: Radius.circular(7),
+            bottomLeft: Radius.circular(7),
+            bottomRight: Radius.circular(7)),
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.5),
@@ -28,7 +28,7 @@ class ListBox extends StatelessWidget {
         ],
       ),
       child: Container(
-        margin: EdgeInsets.all(8),
+        margin: EdgeInsets.all(10),
         child: Column(
           children: [
             Row(
@@ -55,7 +55,7 @@ class ListBox extends StatelessWidget {
               ),
             ),
             Image(
-              height: 100,
+              height: 80,
               width: 150,
               image: AssetImage("assets/images/illus6.png"),
             ),
@@ -64,7 +64,7 @@ class ListBox extends StatelessWidget {
             ),
             Text(
               "Hey guys I have a spare math book which I want to give for free, please feel free to send me a text message on this number, i'll be very happy to help you out.",
-              maxLines: 6,
+              maxLines: 3,
               overflow: TextOverflow.ellipsis,
               style: GoogleFonts.josefinSans(
                 textStyle: TextStyle(

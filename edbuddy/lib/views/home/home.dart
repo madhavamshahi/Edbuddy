@@ -102,8 +102,10 @@ class _HomeState extends State<Home> {
     List<Widget> _widgetOptions = <Widget>[
       GridView.builder(
         itemCount: 20,
-        gridDelegate:
-            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          mainAxisExtent: 256,
+        ),
         itemBuilder: (BuildContext context, int index) {
           return ListBox();
         },
