@@ -47,25 +47,8 @@ inputListing({required BuildContext context}) {
       title: "List your supplies",
       content: Column(
         children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text("Add an image"),
-              GestureDetector(
-                  onTap: () async {
-                    img = await getImage();
-                  },
-                  child: Icon(FontAwesomeIcons.plus)),
-            ],
-          ),
-          img != null
-              ? Image(
-                  image: FileImage(
-                  File(
-                    img!.path,
-                  ),
-                ))
-              : Container(),
+          SizedBox(height: 20),
+          AddImage(),
           TextField(
             obscureText: true,
             decoration: InputDecoration(
@@ -91,4 +74,56 @@ inputListing({required BuildContext context}) {
           ),
         )
       ]).show();
+}
+
+class AddImage extends StatefulWidget {
+  AddImage({Key? key}) : super(key: key);
+
+  @override
+  State<AddImage> createState() => _AddImageState();
+}
+
+class _AddImageState extends State<AddImage> {
+  XFile? img;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text("Add an image"),
+              ],
+            ),
+            GestureDetector(
+              onTap: () async {
+                img = await getImage();
+                setState(() {});
+              },
+              child: Icon(
+                FontAwesomeIcons.plus,
+                color: Colors.blue,
+              ),
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 20,
+        ),
+        img != null
+            ? Image(
+                height: 200,
+                image: FileImage(
+                  File(
+                    img!.path,
+                  ),
+                ))
+            : Container(),
+      ],
+    );
+  }
 }
