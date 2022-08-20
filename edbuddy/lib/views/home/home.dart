@@ -6,6 +6,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:shrink_sidemenu/shrink_sidemenu.dart';
 
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
@@ -100,15 +102,22 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     List<Widget> _widgetOptions = <Widget>[
-      GridView.builder(
-        itemCount: 20,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          mainAxisExtent: 256,
-        ),
-        itemBuilder: (BuildContext context, int index) {
-          return ListBox();
-        },
+      Column(
+        children: [
+          SizedBox(height: 20),
+          Expanded(
+            child: GridView.builder(
+              itemCount: 20,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisExtent: 256,
+              ),
+              itemBuilder: (BuildContext context, int index) {
+                return ListBox();
+              },
+            ),
+          ),
+        ],
       ),
       Center(
         child: Text(
@@ -141,15 +150,50 @@ class _HomeState extends State<Home> {
         setState(() => isOpened = _isOpened);
       },
       child: Scaffold(
+        floatingActionButton: _selectedIndex == 0
+            ? FloatingActionButton.extended(
+                onPressed: () {
+                  // Add your onPressed code here!
+                },
+                label: Text('Add Listing'),
+                icon: Icon(FontAwesomeIcons.plus),
+                backgroundColor: Colors.blue,
+              )
+            : Container(),
         backgroundColor: Colors.white,
         appBar: AppBar(
-          elevation: 20,
-          leading: GestureDetector(
-              onTap: () {
-                toggleMenu(true);
+          centerTitle: true,
+          title: _selectedIndex == 0
+              ? Text(
+                  "All Listings",
+                  style: TextStyle(color: Colors.black),
+                )
+              : Container(),
+          backgroundColor: Colors.white,
+          elevation: 0,
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(
+                FontAwesomeIcons.userAstronaut,
+                color: Colors.black,
+              ),
+              onPressed: () {
+                // do something
               },
-              child: Icon(FontAwesomeIcons.bars)),
-          title: const Text('GoogleNavBar'),
+            ),
+            SizedBox(
+              width: 20,
+            )
+          ],
+          leading: GestureDetector(
+            onTap: () {
+              toggleMenu(true);
+            },
+            child: Icon(
+              FontAwesomeIcons.bars,
+              color: Colors.black,
+            ),
+          ),
         ),
         body: Center(
           child: _widgetOptions.elementAt(_selectedIndex),

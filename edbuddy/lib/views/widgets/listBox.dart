@@ -20,7 +20,7 @@ class ListBox extends StatelessWidget {
             bottomRight: Radius.circular(7)),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
+            color: Colors.grey.withOpacity(0.2),
             spreadRadius: 5,
             blurRadius: 7,
             offset: Offset(0, 3), // changes position of shadow
