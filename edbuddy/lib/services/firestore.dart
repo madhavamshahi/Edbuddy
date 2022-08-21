@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:edbuddy/models/listModel.dart';
 import 'package:edbuddy/models/studyBModel.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Firestore {
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -13,5 +14,15 @@ class Firestore {
 
   Future<void> uploadStudyBuddyReq(StudyBModel listing) async {
     _firestore.collection("studyBuddyReq").doc().set(listing.toJson());
+  }
+
+  Future<void> uploadMajor(String major) async {
+    _firestore
+        .collection("users")
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .set(
+      {"major": major},
+      SetOptions(merge: true),
+    );
   }
 }

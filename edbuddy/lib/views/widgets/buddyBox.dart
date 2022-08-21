@@ -5,6 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:edbuddy/models/studyBModel.dart';
 import 'package:intl/intl.dart';
 
+import 'package:url_launcher/url_launcher.dart';
+
 class BuddyBox extends StatelessWidget {
   const BuddyBox({Key? key, required this.model}) : super(key: key);
 
@@ -76,12 +78,14 @@ class BuddyBox extends StatelessWidget {
                     ),
                   ),
                 ),
-                Expanded(
+                Container(
+                  height: 27,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount: model.sub.length,
                     itemBuilder: ((context, index) {
                       return Container(
+                        margin: EdgeInsets.only(left: 2),
                         padding: EdgeInsets.all(5),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(4)),
@@ -98,12 +102,26 @@ class BuddyBox extends StatelessWidget {
               ],
             ),
           ),
-          Icon(
-            FontAwesomeIcons.message,
-            color: Colors.blue,
+          GestureDetector(
+            onTap: () {
+              _launchURL(model.phn);
+            },
+            child: Icon(
+              FontAwesomeIcons.message,
+              color: Colors.blue,
+            ),
           )
         ],
       ),
     );
+  }
+}
+
+_launchURL(String phn) async {
+  String url = 'sms:$phn';
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
   }
 }

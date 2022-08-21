@@ -40,6 +40,7 @@ dev_dependencies:
   getwidget: ^3.0.1
   firebase_auth: ^3.6.4
   filter_list: ^1.0.2
+  drop_down_list: ^0.0.3
   cloud_firestore: ^3.4.5
 
 

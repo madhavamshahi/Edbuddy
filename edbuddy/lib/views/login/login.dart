@@ -1,6 +1,7 @@
 import 'package:edbuddy/views/widgets/googleSignin.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 
 class LoginView extends StatefulWidget {
   @override
@@ -8,6 +9,8 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
+  String? major = "";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,6 +60,48 @@ class _LoginViewState extends State<LoginView> {
                       ),
                     ),
                     SizedBox(height: 35),
+                    Container(
+                      margin: EdgeInsets.all(20),
+                      child: DropdownSearch<String>(
+                        dropdownDecoratorProps: DropDownDecoratorProps(
+                          baseStyle: TextStyle(color: Colors.white),
+                          dropdownSearchDecoration: InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Colors.white, width: 0.0)),
+                          ),
+                        ),
+                        popupProps: PopupProps.menu(
+                          textStyle: TextStyle(color: Colors.white),
+                          showSelectedItems: true,
+                          disabledItemFn: (String s) => s.startsWith('I'),
+                        ),
+                        items: [
+                          "Computer Science",
+                          "Data Science",
+                          "Economics",
+                          "Biology",
+                          "Maths",
+                          "Chemistry",
+                          "Pshycology",
+                          "Music",
+                          "Macroeconomics",
+                          "History",
+                          "Political Science",
+                          "Business",
+                          "Geology",
+                          "Astronomy",
+                          "Finance",
+                          "Civics",
+                          "Geography",
+                          "Physics"
+                        ],
+                        onChanged: (String? s) {
+                          major = s;
+                        },
+                        selectedItem: "Brazil",
+                      ),
+                    ),
                     GoogleSignInButton(),
                     SizedBox(height: 200),
                   ],
