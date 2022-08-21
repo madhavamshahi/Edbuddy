@@ -34,6 +34,7 @@ dev_dependencies:
   image_picker: ^0.8.5+3
 
   google_nav_bar: ^5.0.6
+  google_sign_in: '^4.5.1'
   shrink_sidemenu: ^2.0.0+2-null-safety
   font_awesome_flutter: ^10.1.0
   getwidget: ^3.0.1
