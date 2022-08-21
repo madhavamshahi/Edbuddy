@@ -183,7 +183,7 @@ studyBuddyReq({required BuildContext context}) {
   TextEditingController phn = TextEditingController();
 
   TextEditingController des = TextEditingController();
-  List<String> selected = [];
+  List<String> selected = ["Maths"];
   return Alert(
       context: context,
       title: "Find your buddy",
@@ -245,6 +245,7 @@ studyBuddyReq({required BuildContext context}) {
 
             Firestore _firestore = Firestore();
             StudyBModel model = StudyBModel(
+                img: auth.user.currentUser!.photoURL!,
                 phn: phn.text,
                 name: auth.user.currentUser!.displayName!,
                 uid: auth.user.currentUser!.uid,

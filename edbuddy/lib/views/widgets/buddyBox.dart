@@ -2,12 +2,21 @@ import 'package:flutter/material.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:edbuddy/models/studyBModel.dart';
+import 'package:intl/intl.dart';
 
 class BuddyBox extends StatelessWidget {
-  const BuddyBox({Key? key}) : super(key: key);
+  const BuddyBox({Key? key, required this.model}) : super(key: key);
 
+  final StudyBModel model;
   @override
   Widget build(BuildContext context) {
+    var date = DateTime.fromMillisecondsSinceEpoch(
+        model.timestamp.millisecondsSinceEpoch * 1000);
+    final DateTime now = DateTime.now();
+    final DateFormat formatter = DateFormat('MMMMd');
+    final String formatted = formatter.format(now);
+
     return Container(
       padding: EdgeInsets.all(15),
       decoration: BoxDecoration(
@@ -32,11 +41,11 @@ class BuddyBox extends StatelessWidget {
           Column(
             children: [
               CircleAvatar(
-                backgroundImage: AssetImage("assets/images/illus6.png"),
+                backgroundImage: NetworkImage(model.img),
               ),
               SizedBox(height: 15),
               Text(
-                "August 20",
+                formatted,
                 style: TextStyle(fontSize: 12, color: Colors.black),
               ),
             ],
@@ -49,14 +58,14 @@ class BuddyBox extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Madhavam Shahi"),
+                Text(model.name),
                 SizedBox(
                   height: 5,
                 ),
                 Container(
                   margin: EdgeInsets.only(bottom: 5),
                   child: Text(
-                    "Hey I'm struggling with maths, looking for someone to study with.",
+                    "${model.desc}",
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
                     style: GoogleFonts.josefinSans(
@@ -67,17 +76,25 @@ class BuddyBox extends StatelessWidget {
                     ),
                   ),
                 ),
-                Container(
-                  padding: EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(4)),
-                    color: Colors.blue,
+                Expanded(
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: model.sub.length,
+                    itemBuilder: ((context, index) {
+                      return Container(
+                        padding: EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(4)),
+                          color: Colors.blue,
+                        ),
+                        child: Text(
+                          "${model.sub[index]}",
+                          style: TextStyle(fontSize: 12, color: Colors.white),
+                        ),
+                      );
+                    }),
                   ),
-                  child: Text(
-                    "Maths",
-                    style: TextStyle(fontSize: 12, color: Colors.white),
-                  ),
-                ),
+                )
               ],
             ),
           ),

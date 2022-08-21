@@ -1,4 +1,5 @@
 import 'package:edbuddy/models/listModel.dart';
+import 'package:edbuddy/models/studyBModel.dart';
 import 'package:edbuddy/views/widgets/buddyBox.dart';
 import 'package:edbuddy/views/widgets/filter.dart';
 import 'package:edbuddy/views/widgets/listBox.dart';
@@ -7,7 +8,8 @@ import 'package:edbuddy/views/widgets/userprofile.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
+import 'package:filter_list/filter_list.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:shrink_sidemenu/shrink_sidemenu.dart';
@@ -21,6 +23,59 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  List<String> subjects = [
+    "Computer Science",
+    "Data Science",
+    "Economics",
+    "Biology",
+    "Maths",
+    "Chemistry",
+    "Pshycology",
+    "Music",
+    "Macroeconomics",
+    "History",
+    "Political Science",
+    "Business",
+    "Geology",
+    "Astronomy",
+    "Finance",
+    "Civics",
+    "Geography",
+    "Physics",
+  ];
+
+  Future<void> _openFilterDialog({required BuildContext context}) async {
+    await FilterListDialog.display<String>(
+      context,
+      hideSelectedTextCount: true,
+      themeData: FilterListThemeData(context),
+      headlineText: 'Select Subjects',
+      height: 500,
+      listData: subjects,
+      selectedListData: selectedList,
+      choiceChipLabel: (item) {
+        String g = item as String;
+        return g;
+      },
+      validateSelectedItem: (list, val) => list!.contains(val),
+      controlButtons: [ControlButtonType.All, ControlButtonType.Reset],
+      onItemSearch: (sub, query) {
+        /// When search query change in search bar then this method will be called
+        ///
+        /// Check if items contains query
+        String? f = sub as String;
+        return f.toLowerCase().contains(query.toLowerCase());
+      },
+      onApplyButtonClick: (list) {
+        setState(() {
+          selectedList = List.from(list!);
+        });
+        print(selectedList);
+        Navigator.pop(context);
+      },
+    );
+  }
+
   final GlobalKey<SideMenuState> _sideMenuKey = GlobalKey<SideMenuState>();
   final GlobalKey<SideMenuState> _endSideMenuKey = GlobalKey<SideMenuState>();
   bool isOpened = false;
@@ -144,12 +199,47 @@ class _HomeState extends State<Home> {
       ),
       Column(
         children: [
-          Filter(),
+          Align(
+            alignment: Alignment.centerRight,
+            child: Container(
+              margin: EdgeInsets.all(8),
+              child: IconButton(
+                onPressed: () {
+                  _openFilterDialog(context: context);
+                },
+                icon: Icon(FontAwesomeIcons.filter, color: Colors.blue),
+              ),
+            ),
+          ),
           Expanded(
-            child: ListView.builder(itemBuilder: (context, int n) {
-              return BuddyBox();
-            }),
+            child: StreamBuilder(
+                stream: FirebaseFirestore.instance
+                    .collection('studyBuddyReq')
+                    .where('sub', arrayContainsAny: selectedList)
+                    .snapshots(),
+                builder: (context, AsyncSnapshot<QuerySnapshot> snap) {
+                  if (snap.hasData) {
+                    return ListView.builder(
+                        itemCount: snap.data!.docs.length,
+                        itemBuilder: (context, index) {
+                          Map data = {};
+                          data = snap.data!.docs[index].data() as Map;
+
+                          StudyBModel model = StudyBModel.fromJson(data);
+
+                          return BuddyBox(model: model);
+                        });
+                  }
+
+                  return Container();
+                }),
           )
+
+          // Expanded(
+          //   child: ListView.builder(itemBuilder: (context, int n) {
+          //     return BuddyBox();
+          //   }),
+          // )
         ],
       ),
       Column(
@@ -371,4 +461,84 @@ Widget buildMenu() {
       ],
     ),
   );
+}
+
+List<String> selectedList = ["Maths"];
+
+class Filter extends StatefulWidget {
+  Filter({Key? key}) : super(key: key);
+
+  @override
+  State<Filter> createState() => _FilterState();
+}
+
+class _FilterState extends State<Filter> {
+  List<String> subjects = [
+    "Computer Science",
+    "Data Science",
+    "Economics",
+    "Biology",
+    "Maths",
+    "Chemistry",
+    "Pshycology",
+    "Music",
+    "Macroeconomics",
+    "History",
+    "Political Science",
+    "Business",
+    "Geology",
+    "Astronomy",
+    "Finance",
+    "Civics",
+    "Geography",
+    "Physics",
+  ];
+
+  Future<void> _openFilterDialog({required BuildContext context}) async {
+    await FilterListDialog.display<String>(
+      context,
+      hideSelectedTextCount: true,
+      themeData: FilterListThemeData(context),
+      headlineText: 'Select Subjects',
+      height: 500,
+      listData: subjects,
+      selectedListData: selectedList,
+      choiceChipLabel: (item) {
+        String g = item as String;
+        return g;
+      },
+      validateSelectedItem: (list, val) => list!.contains(val),
+      controlButtons: [ControlButtonType.All, ControlButtonType.Reset],
+      onItemSearch: (sub, query) {
+        /// When search query change in search bar then this method will be called
+        ///
+        /// Check if items contains query
+        String? f = sub as String;
+        return f.toLowerCase().contains(query.toLowerCase());
+      },
+      onApplyButtonClick: (list) {
+        setState(() {
+          selectedList = List.from(list!);
+        });
+        print(selectedList);
+        Navigator.pop(context);
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.centerRight,
+      child: Container(
+        margin: EdgeInsets.all(8),
+        child: IconButton(
+          onPressed: () {
+            _openFilterDialog(context: context);
+          },
+          icon: Icon(FontAwesomeIcons.filter, color: Colors.blue),
+        ),
+      ),
+    );
+  }
 }
