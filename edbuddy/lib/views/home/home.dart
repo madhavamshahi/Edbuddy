@@ -433,14 +433,16 @@ Widget buildMenu() {
           padding: const EdgeInsets.only(left: 16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
+            children: [
               CircleAvatar(
+                backgroundImage: NetworkImage(
+                    "${FirebaseAuth.instance.currentUser!.photoURL}"),
                 backgroundColor: Colors.white,
-                radius: 22.0,
+                radius: 35.0,
               ),
               SizedBox(height: 16.0),
               Text(
-                "Hello, John Doe",
+                "Hello",
                 style: TextStyle(color: Colors.white),
               ),
               SizedBox(height: 20.0),
@@ -449,8 +451,8 @@ Widget buildMenu() {
         ),
         ListTile(
           onTap: () {},
-          leading: const Icon(Icons.home, size: 20.0, color: Colors.white),
-          title: const Text("Home"),
+          leading: const Icon(Icons.handshake, size: 20.0, color: Colors.white),
+          title: const Text("Credits"),
           textColor: Colors.white,
           dense: true,
         ),
@@ -458,37 +460,7 @@ Widget buildMenu() {
           onTap: () {},
           leading:
               const Icon(Icons.verified_user, size: 20.0, color: Colors.white),
-          title: const Text("Profile"),
-          textColor: Colors.white,
-          dense: true,
-
-          // padding: EdgeInsets.zero,
-        ),
-        ListTile(
-          onTap: () {},
-          leading: const Icon(Icons.monetization_on,
-              size: 20.0, color: Colors.white),
-          title: const Text("Wallet"),
-          textColor: Colors.white,
-          dense: true,
-
-          // padding: EdgeInsets.zero,
-        ),
-        ListTile(
-          onTap: () {},
-          leading:
-              const Icon(Icons.shopping_cart, size: 20.0, color: Colors.white),
-          title: const Text("Cart"),
-          textColor: Colors.white,
-          dense: true,
-
-          // padding: EdgeInsets.zero,
-        ),
-        ListTile(
-          onTap: () {},
-          leading:
-              const Icon(Icons.star_border, size: 20.0, color: Colors.white),
-          title: const Text("Favorites"),
+          title: const Text("About Us"),
           textColor: Colors.white,
           dense: true,
 
@@ -498,6 +470,34 @@ Widget buildMenu() {
           onTap: () {},
           leading: const Icon(Icons.settings, size: 20.0, color: Colors.white),
           title: const Text("Settings"),
+          textColor: Colors.white,
+          dense: true,
+
+          // padding: EdgeInsets.zero,
+        ),
+        ListTile(
+          onTap: () {},
+          leading: const Icon(Icons.email, size: 20.0, color: Colors.white),
+          title: const Text("Contact Us"),
+          textColor: Colors.white,
+          dense: true,
+
+          // padding: EdgeInsets.zero,
+        ),
+        ListTile(
+          onTap: () {},
+          leading: const Icon(Icons.book, size: 20.0, color: Colors.white),
+          title: const Text("Terms and Conditions"),
+          textColor: Colors.white,
+          dense: true,
+
+          // padding: EdgeInsets.zero,
+        ),
+        ListTile(
+          onTap: () {},
+          leading: const Icon(Icons.book_online_sharp,
+              size: 20.0, color: Colors.white),
+          title: const Text("Privacy Policy"),
           textColor: Colors.white,
           dense: true,
 

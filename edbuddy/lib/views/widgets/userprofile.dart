@@ -1,5 +1,8 @@
 import 'dart:io';
 
+import 'package:edbuddy/services/auth.dart';
+import 'package:edbuddy/views/home/home.dart';
+import 'package:edbuddy/views/login/login.dart';
 import 'package:flutter/services.dart';
 
 import 'dart:convert';
@@ -132,7 +135,19 @@ class _UserProfileViewState extends State<UserProfileView> {
                 iconColor: Color(0xFF02A2EE),
               ),
               OptionRow(
-                onTap: () async {},
+                onTap: () async {
+                  Auth auth = Auth();
+
+                  auth.signOut();
+                  Navigator.pop(context);
+
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => LoginView(),
+                    ),
+                  );
+                },
                 iconColor2: Color(0xFFF989A4),
                 text: "Sign out",
                 iconData: FontAwesomeIcons.signOut,
