@@ -6,6 +6,9 @@ import 'package:edbuddy/services/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'dart:io';
+import 'package:flutter/services.dart';
+import 'package:edbuddy/models/listModel.dart';
+import 'firestore.dart';
 
 showDetails({required BuildContext context}) {
   return Alert(
@@ -40,7 +43,13 @@ showDetails({required BuildContext context}) {
       ]).show();
 }
 
+String imgURL = "";
+
 inputListing({required BuildContext context}) {
+  TextEditingController phn = TextEditingController();
+
+  TextEditingController desc = TextEditingController();
+
   XFile? img;
   return Alert(
       context: context,
@@ -50,6 +59,7 @@ inputListing({required BuildContext context}) {
           SizedBox(height: 20),
           AddImage(),
           TextField(
+            controller: desc,
             obscureText: true,
             decoration: InputDecoration(
               icon: Icon(FontAwesomeIcons.textHeight),
@@ -58,6 +68,7 @@ inputListing({required BuildContext context}) {
           ),
           TextField(
             obscureText: true,
+            controller: phn,
             decoration: InputDecoration(
               icon: Icon(FontAwesomeIcons.phone),
               labelText: 'Phone number',
@@ -67,7 +78,24 @@ inputListing({required BuildContext context}) {
       ),
       buttons: [
         DialogButton(
-          onPressed: () => Navigator.pop(context),
+          onPressed: () async {
+            Firestore _firestore = new Firestore();
+            Auth auth = Auth();
+            String? name = auth.user.currentUser!.displayName;
+
+            FireStorage _firestorage = FireStorage();
+
+            await _firestore.uploadListing(
+              ListingModel(
+                  phn: phn.text,
+                  name: name!,
+                  uid: auth.user.currentUser!.uid,
+                  imgURL: imgURL,
+                  desc: desc.text),
+            );
+
+            Navigator.pop(context);
+          },
           child: Text(
             "Done",
             style: TextStyle(color: Colors.white, fontSize: 20),
@@ -103,6 +131,10 @@ class _AddImageState extends State<AddImage> {
               onTap: () async {
                 img = await getImage();
                 setState(() {});
+
+                FireStorage storage = FireStorage();
+                File file = File(img!.path);
+                storage.uploadImage(file);
               },
               child: Icon(
                 FontAwesomeIcons.plus,

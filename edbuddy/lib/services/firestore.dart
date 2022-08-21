@@ -7,8 +7,8 @@ import 'package:edbuddy/models/studyBModel.dart';
 class Firestore {
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  void uploadListing(ListingModel listing) async {
-    _firestore.collection("listings").doc().set(listing.toJson());
+  Future<void> uploadListing(ListingModel listing) async {
+    await _firestore.collection("listings").doc().set(listing.toJson());
   }
 
   void uploadStudyBuddyReq(ListingModel listing) async {
