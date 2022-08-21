@@ -170,6 +170,11 @@ class _HomeState extends State<Home> {
                     .snapshots(),
                 builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (snapshot.hasData) {
+                    if (snapshot.hasError) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
                     return GridView.builder(
                       itemCount: snapshot.data!.docs.length,
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -190,9 +195,11 @@ class _HomeState extends State<Home> {
                         );
                       },
                     );
+                  } else {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
                   }
-
-                  return Container();
                 }),
           ),
         ],
