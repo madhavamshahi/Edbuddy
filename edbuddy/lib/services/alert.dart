@@ -1,3 +1,5 @@
+import 'package:edbuddy/models/studyBModel.dart';
+import 'package:edbuddy/views/widgets/buddyBox.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -9,18 +11,21 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:edbuddy/models/listModel.dart';
 import 'firestore.dart';
+import 'package:edbuddy/models/listModel.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-showDetails({required BuildContext context}) {
+showDetails({required BuildContext context, required ListingModel listing}) {
   return Alert(
       context: context,
-      title: "LOGIN",
+      title: "Listing Details",
       content: Column(
         children: <Widget>[
           Image(
-            image: AssetImage("assets/images/illus6.png"),
+            image: NetworkImage(listing.imgURL),
           ),
+          SizedBox(height: 10),
           Text(
-            "Hey guys I have a spare math book which I want to give for free, please feel free to send me a text message on this number, i'll be very happy to help you out.",
+            listing.desc,
             maxLines: 5,
             overflow: TextOverflow.ellipsis,
             style: GoogleFonts.josefinSans(
@@ -34,13 +39,24 @@ showDetails({required BuildContext context}) {
       ),
       buttons: [
         DialogButton(
-          onPressed: () => Navigator.pop(context),
+          onPressed: () {
+            _launchURL(listing.phn);
+          },
           child: Text(
             "Send SMS",
             style: TextStyle(color: Colors.white, fontSize: 20),
           ),
         )
       ]).show();
+}
+
+_launchURL(String phn) async {
+  String url = 'sms:$phn';
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
+  }
 }
 
 String imgURL = "";
@@ -164,6 +180,10 @@ class _AddImageState extends State<AddImage> {
 }
 
 studyBuddyReq({required BuildContext context}) {
+  TextEditingController phn = TextEditingController();
+
+  TextEditingController des = TextEditingController();
+  List<String> selected = [];
   return Alert(
       context: context,
       title: "Find your buddy",
@@ -195,17 +215,21 @@ studyBuddyReq({required BuildContext context}) {
               showSelectedItems: true,
               disabledItemFn: (String s) => s.startsWith('I'),
             ),
-            onChanged: print,
-            selectedItems: ["Maths"],
+            onChanged: (List<String> g) {
+              selected = g;
+            },
+            selectedItems: selected,
           ),
           TextField(
             obscureText: false,
+            controller: phn,
             decoration: InputDecoration(
               icon: Icon(FontAwesomeIcons.phone),
               labelText: 'Phone number',
             ),
           ),
           TextField(
+            controller: des,
             obscureText: false,
             decoration: InputDecoration(
               icon: Icon(FontAwesomeIcons.textHeight),
@@ -216,7 +240,20 @@ studyBuddyReq({required BuildContext context}) {
       ),
       buttons: [
         DialogButton(
-          onPressed: () => Navigator.pop(context),
+          onPressed: () async {
+            Auth auth = Auth();
+
+            Firestore _firestore = Firestore();
+            StudyBModel model = StudyBModel(
+                phn: phn.text,
+                name: auth.user.currentUser!.displayName!,
+                uid: auth.user.currentUser!.uid,
+                sub: selected,
+                desc: des.text);
+            await _firestore.uploadStudyBuddyReq(model);
+
+            Navigator.pop(context);
+          },
           child: Text(
             "Done",
             style: TextStyle(color: Colors.white, fontSize: 20),

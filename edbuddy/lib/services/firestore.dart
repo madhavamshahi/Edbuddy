@@ -11,7 +11,7 @@ class Firestore {
     await _firestore.collection("listings").doc().set(listing.toJson());
   }
 
-  void uploadStudyBuddyReq(ListingModel listing) async {
+  Future<void> uploadStudyBuddyReq(StudyBModel listing) async {
     _firestore.collection("studyBuddyReq").doc().set(listing.toJson());
   }
 }

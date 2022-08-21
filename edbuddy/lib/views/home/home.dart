@@ -124,13 +124,12 @@ class _HomeState extends State<Home> {
                       itemBuilder: (BuildContext context, int index) {
                         // print(snapshot.data!.docs[index].data()['name']);
 
-                        print('sdf');
                         Map data = {};
                         data = snapshot.data!.docs[index].data() as Map;
                         ListingModel listing = ListingModel.fromJson(data);
                         return GestureDetector(
                           onTap: () {
-                            showDetails(context: context);
+                            showDetails(context: context, listing: listing);
                           },
                           child: ListBox(listing: listing),
                         );
