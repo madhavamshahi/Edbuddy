@@ -35,9 +35,9 @@ class MajorBox extends StatelessWidget {
                     height: 60,
                   ),
                   Container(
-                    margin: EdgeInsets.all(15),
+                    margin: EdgeInsets.all(20),
                     child: Text(
-                      "Madhavam Pratap Shahi",
+                      "Madhavam Shahi",
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 15,

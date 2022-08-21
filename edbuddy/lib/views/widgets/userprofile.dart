@@ -58,23 +58,44 @@ class _UserProfileViewState extends State<UserProfileView> {
                         ],
                       ),
                     ),
+                    SizedBox(width: 25),
+                    Flexible(
+                      child: Column(
+                        children: [
+                          Text(
+                            "Madhavam Pratap Shahi",
+                            maxLines: 3,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              letterSpacing: 1.5,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: "QuickSand",
+                              fontSize: 20.0,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            "Computer Science",
+                            maxLines: 5,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              letterSpacing: 1.5,
+                              color: Colors.black.withOpacity(0.7),
+                              fontWeight: FontWeight.w500,
+                              fontFamily: "QuickSand",
+                              fontSize: 15.0,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
               SizedBox(height: 20),
-              Text(
-                "Madhavam Pratap Shahi",
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  letterSpacing: 1.5,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: "QuickSand",
-                  fontSize: 30.0,
-                ),
-              ),
-              SizedBox(height: 10),
               Text(
                 "Computer Science",
                 maxLines: 5,
@@ -99,14 +120,14 @@ class _UserProfileViewState extends State<UserProfileView> {
                 // TODO for profile edit https://dribbble.com/shots/15054650-BoltCard-Settings-Profile
                 onTap: () {},
                 iconColor2: Color(0xFFECEAFE),
-                text: "Study buddies",
+                text: "Contact Support",
                 iconData: FontAwesomeIcons.peopleGroup,
                 iconColor: Color(0xFF5722FB),
               ),
               OptionRow(
                 onTap: () {},
                 iconColor2: Color(0xFFE4F7FF),
-                text: "View Listings",
+                text: "About Us",
                 iconData: FontAwesomeIcons.book,
                 iconColor: Color(0xFF02A2EE),
               ),
