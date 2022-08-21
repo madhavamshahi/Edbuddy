@@ -170,6 +170,13 @@ studyBuddyReq({required BuildContext context}) {
               labelText: 'Phone number',
             ),
           ),
+          TextField(
+            obscureText: false,
+            decoration: InputDecoration(
+              icon: Icon(FontAwesomeIcons.textHeight),
+              labelText: 'Description',
+            ),
+          )
         ],
       ),
       buttons: [

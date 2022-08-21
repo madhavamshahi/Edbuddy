@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class BuddyBox extends StatelessWidget {
   const BuddyBox({Key? key}) : super(key: key);
@@ -43,35 +44,46 @@ class BuddyBox extends StatelessWidget {
           SizedBox(
             width: 10,
           ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text("Madhavam Shahi"),
-              SizedBox(
-                height: 5,
-              ),
-              Container(
-                padding: EdgeInsets.all(5),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(4)),
-                  color: Colors.blue,
+          Flexible(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("Madhavam Shahi"),
+                SizedBox(
+                  height: 5,
                 ),
-                child: Text(
-                  "Maths",
-                  style: TextStyle(fontSize: 12, color: Colors.white),
+                Container(
+                  margin: EdgeInsets.only(bottom: 5),
+                  child: Text(
+                    "Hey I'm struggling with maths, looking for someone to study with.",
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                    style: GoogleFonts.josefinSans(
+                      textStyle: TextStyle(
+                        fontSize: 12,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-            ],
-          ),
-          SizedBox(
-            width: 80,
-          ),
-          Expanded(
-            child: Icon(
-              FontAwesomeIcons.message,
-              color: Colors.blue,
+                Container(
+                  padding: EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(4)),
+                    color: Colors.blue,
+                  ),
+                  child: Text(
+                    "Maths",
+                    style: TextStyle(fontSize: 12, color: Colors.white),
+                  ),
+                ),
+              ],
             ),
+          ),
+          Icon(
+            FontAwesomeIcons.message,
+            color: Colors.blue,
           )
         ],
       ),
