@@ -1,3 +1,4 @@
+import 'package:edbuddy/models/listModel.dart';
 import 'package:edbuddy/views/widgets/buddyBox.dart';
 import 'package:edbuddy/views/widgets/filter.dart';
 import 'package:edbuddy/views/widgets/listBox.dart';
@@ -5,8 +6,9 @@ import 'package:edbuddy/views/widgets/majorBox.dart';
 import 'package:edbuddy/views/widgets/userprofile.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:shrink_sidemenu/shrink_sidemenu.dart';
 
@@ -44,65 +46,6 @@ class _HomeState extends State<Home> {
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.w600);
-  static List<Widget> _widgetOptions = <Widget>[
-    Center(
-      child: Container(
-        height: 200,
-        width: 150,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(10),
-              topRight: Radius.circular(10),
-              bottomLeft: Radius.circular(10),
-              bottomRight: Radius.circular(10)),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 5,
-              blurRadius: 7,
-              offset: Offset(0, 3), // changes position of shadow
-            ),
-          ],
-        ),
-        child: Column(
-          children: [
-            Image(
-              height: 80,
-              width: 150,
-              image: AssetImage("assets/images/illus6.png"),
-            ),
-            Text(
-              "Hey guys I have a spare math book which I want to give for free, please feel free to send me a text message on this number, i'll be very happy to help you out.",
-              maxLines: 5,
-              style: TextStyle(
-                fontSize: 20,
-                color: Colors.black,
-              ),
-            )
-          ],
-        ),
-      ),
-    ),
-    Center(
-      child: Text(
-        'Study Buddy',
-        style: optionStyle,
-      ),
-    ),
-    Center(
-      child: Text(
-        'hhh',
-        style: optionStyle,
-      ),
-    ),
-    Center(
-      child: Text(
-        'Profile',
-        style: optionStyle,
-      ),
-    ),
-  ];
 
   String getTitle(int n) {
     if (n == 0) {
@@ -165,20 +108,38 @@ class _HomeState extends State<Home> {
         children: [
           SizedBox(height: 20),
           Expanded(
-            child: GridView.builder(
-              itemCount: 20,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisExtent: 256,
-              ),
-              itemBuilder: (BuildContext context, int index) {
-                return GestureDetector(
-                    onTap: () {
-                      showDetails(context: context);
-                    },
-                    child: ListBox());
-              },
-            ),
+            child: StreamBuilder(
+                stream: FirebaseFirestore.instance
+                    .collection('listings')
+                    .orderBy('timeStamp', descending: true)
+                    .snapshots(),
+                builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (snapshot.hasData) {
+                    return GridView.builder(
+                      itemCount: snapshot.data!.docs.length,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        mainAxisExtent: 256,
+                      ),
+                      itemBuilder: (BuildContext context, int index) {
+                        // print(snapshot.data!.docs[index].data()['name']);
+
+                        print('sdf');
+                        Map data = {};
+                        data = snapshot.data!.docs[index].data() as Map;
+                        ListingModel listing = ListingModel.fromJson(data);
+                        return GestureDetector(
+                          onTap: () {
+                            showDetails(context: context);
+                          },
+                          child: ListBox(listing: listing),
+                        );
+                      },
+                    );
+                  }
+
+                  return Container();
+                }),
           ),
         ],
       ),

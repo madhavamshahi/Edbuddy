@@ -1,20 +1,29 @@
-import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'auth.dart';
+import 'dart:io';
+import 'package:flutter/material.dart';
 
-class FireStorage {
-// Get a non-default Storage bucket
-  final storage =
-      FirebaseStorage.instanceFor(bucket: "gs://edbuddy-d08c3.appspot.com/");
+import 'services.dart';
 
-  Future<String> uploadImage(File file) async {
+class FirebaseStorageService {
+  FirebaseStorage storage = FirebaseStorage.instance;
+  Future uploadImageAndGetDownloadUrl({
+    required File image,
+  }) async {
     Auth auth = Auth();
+
     String uid = auth.user.currentUser!.uid;
-    TaskSnapshot snapshot =
-        await storage.ref().child("images/$uid").putFile(file);
+    var imageFileName = //TODO chng it to uid so tht it's deleted automatically whn new pic is uploaded
+        uid; //uniqueID
 
-    String downloadURL = await snapshot.ref.getDownloadURL();
+    final storageRef = FirebaseStorage.instance.ref();
+    var date = new DateTime.fromMicrosecondsSinceEpoch(50);
+    final imgRef = storageRef.child("images/${uid}l$date");
 
-    return downloadURL;
+    await imgRef.putFile(image);
+
+    String ss = await imgRef.getDownloadURL();
+    print('hello');
+    print(ss);
+    return ss;
   }
 }

@@ -1,12 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:edbuddy/models/listModel.dart';
+import 'package:intl/date_time_patterns.dart';
+import 'dart:convert';
+
+import 'package:intl/intl.dart';
 
 class ListBox extends StatelessWidget {
   //TODO use dynamic text
-  const ListBox({Key? key}) : super(key: key);
-
+  const ListBox({Key? key, required this.listing}) : super(key: key);
+  final ListingModel listing;
   @override
   Widget build(BuildContext context) {
+    var date = DateTime.fromMillisecondsSinceEpoch(
+        listing.timestamp.millisecondsSinceEpoch * 1000);
+    final DateTime now = DateTime.now();
+    final DateFormat formatter = DateFormat('MMMMd');
+    final String formatted = formatter.format(now);
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
       height: 300,
@@ -35,12 +45,16 @@ class ListBox extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 CircleAvatar(
-                  backgroundImage: AssetImage('assets/images/avatar.png'),
+                  backgroundImage: NetworkImage(listing.profileIMG),
                   radius: 15,
                 ),
-                Text(
-                  "Madhavam Shahi",
-                  style: TextStyle(fontSize: 12),
+                Flexible(
+                  child: Text(
+                    listing.name,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(fontSize: 12),
+                  ),
                 )
               ],
             ),
@@ -50,20 +64,20 @@ class ListBox extends StatelessWidget {
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                "August 20",
+                formatted,
                 style: TextStyle(fontSize: 15),
               ),
             ),
             Image(
               height: 80,
               width: 150,
-              image: AssetImage("assets/images/illus6.png"),
+              image: NetworkImage(listing.imgURL),
             ),
             SizedBox(
               height: 15,
             ),
             Text(
-              "Hey guys I have a spare math book which I want to give for free, please feel free to send me a text message on this number, i'll be very happy to help you out.",
+              listing.desc,
               maxLines: 3,
               overflow: TextOverflow.ellipsis,
               style: GoogleFonts.josefinSans(

@@ -50,7 +50,6 @@ inputListing({required BuildContext context}) {
 
   TextEditingController desc = TextEditingController();
 
-  XFile? img;
   return Alert(
       context: context,
       title: "List your supplies",
@@ -60,14 +59,14 @@ inputListing({required BuildContext context}) {
           AddImage(),
           TextField(
             controller: desc,
-            obscureText: true,
+            obscureText: false,
             decoration: InputDecoration(
               icon: Icon(FontAwesomeIcons.textHeight),
               labelText: 'Description',
             ),
           ),
           TextField(
-            obscureText: true,
+            obscureText: false,
             controller: phn,
             decoration: InputDecoration(
               icon: Icon(FontAwesomeIcons.phone),
@@ -83,17 +82,25 @@ inputListing({required BuildContext context}) {
             Auth auth = Auth();
             String? name = auth.user.currentUser!.displayName;
 
-            FireStorage _firestorage = FireStorage();
+            FirebaseStorageService storage = FirebaseStorageService();
+
+            File file = File(img!.path);
+            String downloadURL =
+                await storage.uploadImageAndGetDownloadUrl(image: file);
+
+            print("heeello");
+
+            print(downloadURL);
 
             await _firestore.uploadListing(
               ListingModel(
+                  profileIMG: auth.user.currentUser!.photoURL!,
                   phn: phn.text,
                   name: name!,
                   uid: auth.user.currentUser!.uid,
-                  imgURL: imgURL,
+                  imgURL: downloadURL,
                   desc: desc.text),
             );
-
             Navigator.pop(context);
           },
           child: Text(
@@ -111,9 +118,9 @@ class AddImage extends StatefulWidget {
   State<AddImage> createState() => _AddImageState();
 }
 
-class _AddImageState extends State<AddImage> {
-  XFile? img;
+XFile? img;
 
+class _AddImageState extends State<AddImage> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -131,10 +138,6 @@ class _AddImageState extends State<AddImage> {
               onTap: () async {
                 img = await getImage();
                 setState(() {});
-
-                FireStorage storage = FireStorage();
-                File file = File(img!.path);
-                storage.uploadImage(file);
               },
               child: Icon(
                 FontAwesomeIcons.plus,
@@ -196,7 +199,7 @@ studyBuddyReq({required BuildContext context}) {
             selectedItems: ["Maths"],
           ),
           TextField(
-            obscureText: true,
+            obscureText: false,
             decoration: InputDecoration(
               icon: Icon(FontAwesomeIcons.phone),
               labelText: 'Phone number',
