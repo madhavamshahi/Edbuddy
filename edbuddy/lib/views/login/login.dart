@@ -1,67 +1,68 @@
+import 'package:edbuddy/views/widgets/googleSignin.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class LoginView extends StatefulWidget {
-  LoginView({Key? key}) : super(key: key);
-
   @override
-  State<LoginView> createState() => _LoginViewState();
+  _LoginViewState createState() => _LoginViewState();
 }
 
 class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.blue,
       body: SafeArea(
         child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: MediaQuery.of(context).size.height / 2,
-              ),
-              Container(
-                height: 200,
-                width: 200,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage("assets/images/illus6.png"),
-                  ),
-                ),
-              ),
-              Text(
-                "Login to continue",
-                style: GoogleFonts.josefinSans(
-                  textStyle: TextStyle(
-                    fontSize: 32,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-              InkWell(
-                onTap: () {},
-                child: Ink(
-                  color: Color(0xFF397AF3),
-                  child: Padding(
-                    padding: EdgeInsets.all(6),
-                    child: Wrap(
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      children: [
-                        Image.asset(
-                          'assets/images/google_logo.png',
-                          height: 50,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(height: 100),
+                    Text(
+                      'Ed-Buddy',
+                      style: GoogleFonts.rubik(
+                        textStyle: TextStyle(
+                          fontSize: 32,
+                          color: Colors.white,
                         ),
-                        SizedBox(width: 12),
-                        Text(
-                          'Sign in with Google',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ],
+                      ),
                     ),
-                  ),
+                    SizedBox(height: 10),
+                    Text(
+                      'Your partner in studies',
+                      style: GoogleFonts.josefinSans(
+                        textStyle: TextStyle(
+                          fontSize: 25,
+                          color: Colors.white.withOpacity(0.5),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 100),
+                    Image.asset(
+                      'assets/images/illus6.png',
+                      height: 200,
+                    ),
+                    Text(
+                      'Login to continue',
+                      style: GoogleFonts.josefinSans(
+                        textStyle: TextStyle(
+                          fontSize: 32,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 35),
+                    GoogleSignInButton(),
+                    SizedBox(height: 200),
+                  ],
                 ),
-              )
-            ],
+              ],
+            ),
           ),
         ),
       ),

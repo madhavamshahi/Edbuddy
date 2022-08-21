@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "459151056132-5fqs7pst97uvd475ua7m5kdnnsei13rk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.edbuddy",
+            "certificate_hash": "3bcdde267b983e57bab1e4ec39b6c04393fe0185"
+          }
+        },
+        {
           "client_id": "459151056132-sk67jig860tnrom3npqtbp1pi656p7va.apps.googleusercontent.com",
           "client_type": 3
         }
