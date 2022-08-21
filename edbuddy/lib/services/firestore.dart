@@ -9,15 +9,21 @@ class Firestore {
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Future<void> uploadListing(ListingModel listing) async {
-    await _firestore.collection("listings").doc().set(listing.toJson());
+    await _firestore
+        .collection("listings")
+        .doc()
+        .set(listing.toJson(), SetOptions(merge: true));
   }
 
   Future<void> uploadStudyBuddyReq(StudyBModel listing) async {
-    _firestore.collection("studyBuddyReq").doc().set(listing.toJson());
+    _firestore
+        .collection("studyBuddyReq")
+        .doc()
+        .set(listing.toJson(), SetOptions(merge: true));
   }
 
-  Future<void> uploadMajor(
-      String major, String? name, String? email, String? photo) async {
+  Future<void> uploadMajor(String major, String? name, String? email,
+      String? photo, String? school) async {
     _firestore
         .collection("users")
         .doc(FirebaseAuth.instance.currentUser!.uid)
@@ -27,6 +33,7 @@ class Firestore {
         "photo": photo,
         'email': email,
         'name': name,
+        "school": school,
       },
       SetOptions(merge: true),
     );

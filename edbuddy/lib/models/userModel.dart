@@ -10,10 +10,13 @@ class User {
   final String major;
   late Timestamp timestamp;
 
+  final String school;
+
   final String email;
 
   User(
       {required this.email,
+      required this.school,
       required this.name,
       required this.uid,
       required this.major});
@@ -22,11 +25,13 @@ class User {
       : name = json['name'],
         major = json['major'],
         uid = json['uid'],
+        school = json['school'],
         timestamp = json['timeStamp'],
         email = json['email'];
 
   Map<String, dynamic> toJson() => {
         'name': name,
+        'school': school,
         'major': major,
         'uid': uid,
         'email': email,

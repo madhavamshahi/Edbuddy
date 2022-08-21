@@ -5,6 +5,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:edbuddy/services/services.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'dart:io';
@@ -108,8 +110,17 @@ inputListing({required BuildContext context}) {
 
             print(downloadURL);
 
+            DocumentSnapshot doc = await FirebaseFirestore.instance
+                .collection('users')
+                .doc(FirebaseAuth.instance.currentUser!.uid)
+                .get();
+            Map data = doc.data() as Map;
+
+            String school = data['school'];
+
             await _firestore.uploadListing(
               ListingModel(
+                  school: school,
                   profileIMG: auth.user.currentUser!.photoURL!,
                   phn: phn.text,
                   name: name!,
@@ -244,9 +255,18 @@ studyBuddyReq({required BuildContext context}) {
             Auth auth = Auth();
 
             Firestore _firestore = Firestore();
+
+            DocumentSnapshot doc = await FirebaseFirestore.instance
+                .collection('users')
+                .doc(FirebaseAuth.instance.currentUser!.uid)
+                .get();
+            Map data = doc.data() as Map;
+
+            String school = data['school'];
             StudyBModel model = StudyBModel(
                 img: auth.user.currentUser!.photoURL!,
                 phn: phn.text,
+                school: school,
                 name: auth.user.currentUser!.displayName!,
                 uid: auth.user.currentUser!.uid,
                 sub: selected,

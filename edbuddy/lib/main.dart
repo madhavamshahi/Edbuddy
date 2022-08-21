@@ -11,8 +11,8 @@ void main() async {
   Auth auth = Auth();
 
   if (await auth.isLoggedIn()) {
-    runApp(MaterialApp(home: Home()));
+    runApp(MaterialApp(debugShowCheckedModeBanner: false, home: Home()));
   } else {
-    runApp(MaterialApp(home: LoginView()));
+    runApp(MaterialApp(debugShowCheckedModeBanner: false, home: LoginView()));
   }
 }

@@ -163,45 +163,70 @@ class _HomeState extends State<Home> {
         children: [
           SizedBox(height: 20),
           Expanded(
-            child: StreamBuilder(
-                stream: FirebaseFirestore.instance
-                    .collection('listings')
-                    .orderBy('timeStamp', descending: true)
-                    .snapshots(),
-                builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if (snapshot.hasData) {
-                    if (snapshot.hasError) {
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
-                    return GridView.builder(
-                      itemCount: snapshot.data!.docs.length,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        mainAxisExtent: 256,
-                      ),
-                      itemBuilder: (BuildContext context, int index) {
-                        // print(snapshot.data!.docs[index].data()['name']);
+              child: FutureBuilder(
+            future: FirebaseFirestore.instance
+                .collection('users')
+                .doc(FirebaseAuth.instance.currentUser!.uid)
+                .get(),
+            builder: (context, AsyncSnapshot snap) {
+              if (snap.connectionState == ConnectionState.waiting) {
+                return Center(child: CircularProgressIndicator());
+              }
 
-                        Map data = {};
-                        data = snapshot.data!.docs[index].data() as Map;
-                        ListingModel listing = ListingModel.fromJson(data);
-                        return GestureDetector(
-                          onTap: () {
-                            showDetails(context: context, listing: listing);
-                          },
-                          child: ListBox(listing: listing),
+              if (snap.hasData) {
+                Map data = snap.data.data() as Map;
+
+                String school = data['school'];
+                return StreamBuilder(
+                    stream: FirebaseFirestore.instance
+                        .collection('listings')
+                        .orderBy('timeStamp', descending: true)
+                        .where('school', isEqualTo: school)
+                        .snapshots(),
+                    builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(child: CircularProgressIndicator());
+                      }
+
+                      if (snapshot.hasError) {
+                        return Center(
+                          child: CircularProgressIndicator(),
                         );
-                      },
-                    );
-                  } else {
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                }),
-          ),
+                      }
+
+                      if (snapshot.hasData) {
+                        return GridView.builder(
+                          itemCount: snapshot.data!.docs.length,
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            mainAxisExtent: 256,
+                          ),
+                          itemBuilder: (BuildContext context, int index) {
+                            // print(snapshot.data!.docs[index].data()['name']);
+
+                            Map data = {};
+                            data = snapshot.data!.docs[index].data() as Map;
+                            ListingModel listing = ListingModel.fromJson(data);
+                            return GestureDetector(
+                              onTap: () {
+                                showDetails(context: context, listing: listing);
+                              },
+                              child: ListBox(listing: listing),
+                            );
+                          },
+                        );
+                      } else {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                    });
+              }
+
+              return Container();
+            },
+          )),
         ],
       ),
       Column(
@@ -219,27 +244,64 @@ class _HomeState extends State<Home> {
             ),
           ),
           Expanded(
-            child: StreamBuilder(
-                stream: FirebaseFirestore.instance
-                    .collection('studyBuddyReq')
-                    .where('sub', arrayContainsAny: selectedList)
-                    .snapshots(),
-                builder: (context, AsyncSnapshot<QuerySnapshot> snap) {
-                  if (snap.hasData) {
-                    return ListView.builder(
-                        itemCount: snap.data!.docs.length,
-                        itemBuilder: (context, index) {
-                          Map data = {};
-                          data = snap.data!.docs[index].data() as Map;
+            child: FutureBuilder(
+              future: FirebaseFirestore.instance
+                  .collection('users')
+                  .doc(FirebaseAuth.instance.currentUser!.uid)
+                  .get(),
+              builder: ((context, AsyncSnapshot snap) {
+                if (snap.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                }
 
-                          StudyBModel model = StudyBModel.fromJson(data);
+                if (snap.hasError) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
 
-                          return BuddyBox(model: model);
-                        });
-                  }
+                if (snap.hasData) {
+                  Map data = snap.data.data() as Map;
 
-                  return Container();
-                }),
+                  String school = data['school'];
+
+                  return StreamBuilder(
+                      stream: FirebaseFirestore.instance
+                          .collection('studyBuddyReq')
+                          .where('sub', arrayContainsAny: selectedList)
+                          .where('school', isEqualTo: school)
+                          .snapshots(),
+                      builder: (context, AsyncSnapshot<QuerySnapshot> snap) {
+                        if (snap.connectionState == ConnectionState.waiting) {
+                          return Center(child: CircularProgressIndicator());
+                        }
+
+                        if (snap.hasError) {
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+
+                        if (snap.hasData) {
+                          return ListView.builder(
+                              itemCount: snap.data!.docs.length,
+                              itemBuilder: (context, index) {
+                                Map data = {};
+                                data = snap.data!.docs[index].data() as Map;
+
+                                StudyBModel model = StudyBModel.fromJson(data);
+
+                                return BuddyBox(model: model);
+                              });
+                        }
+
+                        return Container();
+                      });
+                }
+
+                return Container();
+              }),
+            ),
           )
 
           // Expanded(
@@ -259,17 +321,41 @@ class _HomeState extends State<Home> {
                     .doc(FirebaseAuth.instance.currentUser!.uid)
                     .get(),
                 builder: (context, AsyncSnapshot snap) {
+                  if (snap.connectionState == ConnectionState.waiting) {
+                    return Center(child: CircularProgressIndicator());
+                  }
+
+                  if (snap.hasError) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+
                   if (snap.hasData) {
                     String major = snap.data.data()['major'];
+                    Map data = snap.data.data() as Map;
 
-                    print(major);
+                    String school = data['school'];
+
                     return StreamBuilder(
                       stream: FirebaseFirestore.instance
                           .collection('users')
                           .where('major', isEqualTo: major)
+                          .where('school', isEqualTo: school)
                           .snapshots(),
                       builder:
                           (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Center(child: CircularProgressIndicator());
+                        }
+
+                        if (snapshot.hasError) {
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+
                         if (snapshot.hasData) {
                           return GridView.builder(
                             itemCount: snapshot.data!.docs.length,

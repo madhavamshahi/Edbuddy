@@ -8,8 +8,10 @@ import 'package:edbuddy/services/services.dart';
 
 class GoogleSignInButton extends StatefulWidget {
   final String major;
+  final String school;
   GoogleSignInButton({
     required this.major,
+    required this.school,
   });
   @override
   _GoogleSignInButtonState createState() => _GoogleSignInButtonState();
@@ -55,6 +57,7 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
                   auth.user.currentUser!.displayName,
                   auth.user.currentUser!.email,
                   auth.user.currentUser!.photoURL,
+                  widget.school,
                 );
 
                 if (user != null) {

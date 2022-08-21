@@ -10,7 +10,7 @@ class LoginView extends StatefulWidget {
 
 class _LoginViewState extends State<LoginView> {
   String major = "Maths";
-
+  String school = "Texas Christian University";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -106,7 +106,45 @@ class _LoginViewState extends State<LoginView> {
                         selectedItem: "Maths",
                       ),
                     ),
-                    GoogleSignInButton(major: major),
+                    Container(
+                      margin: EdgeInsets.all(20),
+                      child: DropdownSearch<String>(
+                        dropdownDecoratorProps: DropDownDecoratorProps(
+                          baseStyle: TextStyle(color: Colors.white),
+                          dropdownSearchDecoration: InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Colors.white, width: 0.0)),
+                          ),
+                        ),
+                        popupProps: PopupProps.menu(
+                          textStyle: TextStyle(color: Colors.white),
+                          showSelectedItems: true,
+                          disabledItemFn: (String s) => s.startsWith('I'),
+                        ),
+                        items: [
+                          "Texas Christian University",
+                          "Harvard University",
+                          "MIT",
+                          "Yale University",
+                          "Stanford University",
+                          "UC Berkeley",
+                          "Princeton University",
+                          "Caltech",
+                          "GeorgiaTech",
+                        ],
+                        onChanged: (String? s) {
+                          setState(() {
+                            school = s!;
+                          });
+                        },
+                        selectedItem: "Texas Christian University",
+                      ),
+                    ),
+                    GoogleSignInButton(
+                      major: major,
+                      school: school,
+                    ),
                     SizedBox(height: 200),
                   ],
                 ),
