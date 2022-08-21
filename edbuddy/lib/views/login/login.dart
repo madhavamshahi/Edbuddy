@@ -9,7 +9,7 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
-  String? major = "";
+  String major = "Maths";
 
   @override
   Widget build(BuildContext context) {
@@ -97,12 +97,16 @@ class _LoginViewState extends State<LoginView> {
                           "Physics"
                         ],
                         onChanged: (String? s) {
-                          major = s;
+                          setState(() {
+                            major = s!;
+                          });
+
+                          print(major);
                         },
-                        selectedItem: "Brazil",
+                        selectedItem: "Maths",
                       ),
                     ),
-                    GoogleSignInButton(),
+                    GoogleSignInButton(major: major),
                     SizedBox(height: 200),
                   ],
                 ),

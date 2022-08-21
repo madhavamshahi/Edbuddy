@@ -13,7 +13,7 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:shrink_sidemenu/shrink_sidemenu.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:edbuddy/services/services.dart';
 
@@ -246,16 +246,54 @@ class _HomeState extends State<Home> {
         children: [
           SizedBox(height: 20),
           Expanded(
-            child: GridView.builder(
-              itemCount: 20,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisExtent: 256,
-              ),
-              itemBuilder: (BuildContext context, int index) {
-                return MajorBox();
-              },
-            ),
+            child: FutureBuilder(
+                future: FirebaseFirestore.instance
+                    .collection('users')
+                    .doc(FirebaseAuth.instance.currentUser!.uid)
+                    .get(),
+                builder: (context, AsyncSnapshot snap) {
+                  if (snap.hasData) {
+                    String major = snap.data.data()['major'];
+
+                    print(major);
+                    return StreamBuilder(
+                      stream: FirebaseFirestore.instance
+                          .collection('users')
+                          .where('major', isEqualTo: major)
+                          .snapshots(),
+                      builder:
+                          (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                        if (snapshot.hasData) {
+                          return GridView.builder(
+                            itemCount: snapshot.data!.docs.length,
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              mainAxisExtent: 256,
+                            ),
+                            itemBuilder: (BuildContext context, int index) {
+                              // print(snapshot.data!.docs[index].data()['name']);
+
+                              Map data = {};
+                              data = snapshot.data!.docs[index].data() as Map;
+
+                              print(data);
+                              return MajorBox(
+                                name: data['name'],
+                                major: data['major'],
+                                email: data['email'],
+                              );
+                            },
+                          );
+                        }
+
+                        return Container();
+                      },
+                    );
+                  }
+
+                  return Container();
+                }),
           ),
         ],
       ),

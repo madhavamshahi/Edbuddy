@@ -4,8 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:edbuddy/services/auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:edbuddy/services/services.dart';
 
 class GoogleSignInButton extends StatefulWidget {
+  final String major;
+  GoogleSignInButton({
+    required this.major,
+  });
   @override
   _GoogleSignInButtonState createState() => _GoogleSignInButtonState();
 }
@@ -42,6 +47,15 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
                 setState(() {
                   _isSigningIn = false;
                 });
+
+                Firestore firestore = Firestore();
+
+                await firestore.uploadMajor(
+                  widget.major,
+                  auth.user.currentUser!.displayName,
+                  auth.user.currentUser!.email,
+                  auth.user.currentUser!.photoURL,
+                );
 
                 if (user != null) {
                   Navigator.pop(context);

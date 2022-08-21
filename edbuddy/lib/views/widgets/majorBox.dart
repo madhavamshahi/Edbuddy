@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 
 class MajorBox extends StatelessWidget {
-  const MajorBox({Key? key}) : super(key: key);
-
+  const MajorBox(
+      {Key? key, required this.name, required this.email, required this.major})
+      : super(key: key);
+  final String name;
+  final String major;
+  final String email;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -37,7 +41,7 @@ class MajorBox extends StatelessWidget {
                   Container(
                     margin: EdgeInsets.all(20),
                     child: Text(
-                      "Madhavam Shahi",
+                      name,
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 15,
@@ -51,7 +55,7 @@ class MajorBox extends StatelessWidget {
                       color: Colors.blue,
                     ),
                     child: Text(
-                      "Maths",
+                      major,
                       style: TextStyle(fontSize: 12, color: Colors.white),
                     ),
                   ),

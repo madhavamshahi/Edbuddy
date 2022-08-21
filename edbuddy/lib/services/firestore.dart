@@ -16,12 +16,18 @@ class Firestore {
     _firestore.collection("studyBuddyReq").doc().set(listing.toJson());
   }
 
-  Future<void> uploadMajor(String major) async {
+  Future<void> uploadMajor(
+      String major, String? name, String? email, String? photo) async {
     _firestore
         .collection("users")
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .set(
-      {"major": major},
+      {
+        "major": major,
+        "photo": photo,
+        'email': email,
+        'name': name,
+      },
       SetOptions(merge: true),
     );
   }
