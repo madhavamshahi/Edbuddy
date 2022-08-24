@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "459151056132-hlfdd184900fqm4goe5bej6ho5ppjil1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.edbuddy",
+            "certificate_hash": "548c04207a06d27da724cdafad4556a013bb0aa7"
+          }
+        },
+        {
           "client_id": "459151056132-sk67jig860tnrom3npqtbp1pi656p7va.apps.googleusercontent.com",
           "client_type": 3
         }
